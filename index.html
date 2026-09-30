@@ -1,1 +1,714 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090711">
+  <meta name="description" content="Ryvx Tweaks — clearly explained PC gaming configuration tools and guides.">
+  <title>Ryvx Tweaks | Optimize Your Setup</title>
+
+  <style>
+    :root {
+      --bg: #090711;
+      --panel: #12101d;
+      --panel-light: #191527;
+      --purple: #9561ff;
+      --purple-light: #c2a6ff;
+      --text: #f8f7ff;
+      --muted: #aaa4bc;
+      --border: rgba(190, 155, 255, .16);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 50% -20%, rgba(112, 54, 205, .22), transparent 50%),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a { color: inherit; }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(9, 7, 17, .88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 19px;
+      font-weight: 900;
+      letter-spacing: 1.3px;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      color: white;
+      background: linear-gradient(135deg, #b18aff, #7037e9);
+      box-shadow: 0 0 24px rgba(149, 97, 255, .32);
+    }
+
+    .brand span:last-child { color: var(--purple-light); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover { color: white; }
+
+    .nav-buy {
+      padding: 11px 17px;
+      border: 1px solid rgba(190, 155, 255, .35);
+      border-radius: 9px;
+      background: rgba(149, 97, 255, .12);
+      color: white !important;
+    }
+
+    .hero {
+      min-height: 610px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 90px 0 85px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(121, 62, 235, .12);
+      filter: blur(100px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; max-width: 850px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: rgba(149, 97, 255, .08);
+      color: var(--purple-light);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #a78bfa;
+      box-shadow: 0 0 12px #a78bfa;
+    }
+
+    h1 {
+      margin: 25px 0 18px;
+      font-size: clamp(43px, 8vw, 83px);
+      line-height: .99;
+      letter-spacing: -4px;
+      font-weight: 950;
+    }
+
+    .gradient-text {
+      display: block;
+      color: var(--purple-light);
+      background: linear-gradient(90deg, #d3bdff, #9760ff, #bfa0ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-copy {
+      max-width: 630px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-top: 32px;
+    }
+
+    .button {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 22px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 800;
+      transition: transform .2s, background .2s, border-color .2s;
+      cursor: pointer;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .button-primary {
+      color: white;
+      background: linear-gradient(135deg, #a77aff, #7139e7);
+      box-shadow: 0 8px 30px rgba(120, 65, 230, .25);
+    }
+
+    .button-primary:hover {
+      background: linear-gradient(135deg, #b58fff, #8250f0);
+    }
+
+    .button-secondary {
+      color: white;
+      border-color: var(--border);
+      background: rgba(255, 255, 255, .035);
+    }
+
+    .button-secondary:hover { border-color: rgba(190, 155, 255, .5); }
+
+    .hero-note {
+      margin-top: 20px;
+      color: #777186;
+      font-size: 12px;
+    }
+
+    .section { padding: 78px 0; }
+
+    .section-heading {
+      max-width: 650px;
+      margin: 0 auto 38px;
+      text-align: center;
+    }
+
+    .section-kicker {
+      color: var(--purple-light);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 12px 0;
+      font-size: clamp(29px, 5vw, 43px);
+      letter-spacing: -1.5px;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 17px;
+    }
+
+    .feature-card {
+      padding: 25px;
+      min-height: 190px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: linear-gradient(145deg, rgba(26, 22, 41, .95), rgba(15, 13, 24, .95));
+      transition: transform .2s, border-color .2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(177, 138, 255, .42);
+    }
+
+    .feature-icon {
+      display: grid;
+      place-items: center;
+      width: 43px;
+      height: 43px;
+      border-radius: 12px;
+      color: var(--purple-light);
+      background: rgba(149, 97, 255, .13);
+      font-size: 20px;
+    }
+
+    .feature-card h3 { margin: 18px 0 9px; font-size: 17px; }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .product-wrap {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 30px;
+      align-items: center;
+      padding: 30px;
+      border: 1px solid rgba(177, 138, 255, .22);
+      border-radius: 20px;
+      background:
+        radial-gradient(ellipse at 15% 10%, rgba(116, 60, 225, .15), transparent 55%),
+        var(--panel);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, .2);
+    }
+
+    .product-preview {
+      min-height: 300px;
+      display: grid;
+      place-items: center;
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background:
+        linear-gradient(145deg, rgba(149, 97, 255, .12), transparent),
+        #0c0a14;
+    }
+
+    .preview-window {
+      width: min(100%, 360px);
+      padding: 15px;
+      border: 1px solid rgba(190, 155, 255, .22);
+      border-radius: 13px;
+      background: #14111f;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, .35);
+      transform: rotate(-2deg);
+    }
+
+    .window-top {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-bottom: 13px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .window-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #65547e;
+    }
+
+    .window-title {
+      margin-left: 7px;
+      color: #d8c9fa;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .preview-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #1c1829;
+      color: #c9c2d9;
+      font-size: 11px;
+    }
+
+    .preview-pill {
+      padding: 5px 8px;
+      border-radius: 5px;
+      color: #d8c5ff;
+      background: rgba(149, 97, 255, .15);
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .product-info h2 { text-align: left; }
+
+    .product-info > p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .product-list {
+      display: grid;
+      gap: 12px;
+      margin: 22px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .product-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: #d9d4e5;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .check { color: #b69aff; font-weight: 900; }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      margin: 22px 0 5px;
+    }
+
+    .price { font-size: 43px; font-weight: 950; letter-spacing: -2px; }
+    .price-caption { color: var(--muted); font-size: 12px; }
+
+    .product-info .button { width: 100%; margin-top: 14px; }
+
+    .secure-note {
+      margin-top: 12px;
+      text-align: center;
+      color: #898397;
+      font-size: 11px;
+    }
+
+    .faq-list {
+      max-width: 760px;
+      margin: auto;
+      display: grid;
+      gap: 12px;
+    }
+
+    details {
+      padding: 18px 20px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+    }
+
+    summary {
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    details p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .support-box {
+      padding: 36px 20px;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      background: linear-gradient(135deg, rgba(111, 58, 214, .14), rgba(18, 16, 29, .8));
+    }
+
+    .support-box p {
+      max-width: 530px;
+      margin: 0 auto 20px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    footer {
+      padding: 25px 0;
+      border-top: 1px solid var(--border);
+      color: #817b90;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 760px) {
+      .feature-grid { grid-template-columns: 1fr; }
+      .product-wrap { grid-template-columns: 1fr; padding: 18px; }
+      .product-info h2 { text-align: center; }
+      .product-info { text-align: center; }
+      .product-list { text-align: left; }
+      .nav-links { gap: 12px; }
+      .nav-links a { font-size: 12px; }
+      .nav-buy { padding: 9px 10px; }
+      h1 { letter-spacing: -2px; }
+    }
+
+    @media (max-width: 440px) {
+      .container { width: min(100% - 28px, 1120px); }
+      .nav-inner { min-height: 65px; }
+      .brand { font-size: 15px; }
+      .brand-mark { width: 31px; height: 31px; }
+      .nav-links { gap: 9px; }
+      .nav-links a { font-size: 11px; }
+      .hero { min-height: 550px; padding: 65px 0; }
+      .hero-copy { font-size: 15px; }
+      .section { padding: 58px 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="#home" aria-label="Ryvx Tweaks home">
+        <span class="brand-mark">R</span>
+        <span>RYVX <span>TWEAKS</span></span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#product">Product</a>
+        <a href="#faq">FAQ</a>
+        <a class="nav-buy" href="#product">Buy Now ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="container hero-content">
+        <div class="eyebrow">
+          <span class="status-dot"></span>
+          THE RYVX EXPERIENCE
+        </div>
+
+        <h1>
+          WELCOME TO
+          <span class="gradient-text">RYVX TWEAKS</span>
+        </h1>
+
+        <p class="hero-copy">
+          Take control of your PC setup with easy-to-follow gaming
+          configuration guides and clearly explained Windows settings.
+          Simple setup. Clear instructions. Your system, your choice.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#product">Explore Tweaks <span>↗</span></a>
+          <a class="button button-secondary"
+             href="https://discord.gg/qN5YCF2BEQ"
+             target="_blank" rel="noopener noreferrer">Join Discord</a>
+        </div>
+
+        <div class="hero-note">Digital product · One-time purchase · Email delivery</div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">Why Ryvx?</div>
+          <h2>Built for your setup.</h2>
+          <p>Understand the settings you're using and make informed choices about your PC.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Gaming Focused</h3>
+            <p>Configuration guidance for gaming PCs, including settings you can review for your own setup.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">⌘</div>
+            <h3>Simple Instructions</h3>
+            <p>Clear explanations to help you understand each included setting before you decide to use it.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">◈</div>
+            <h3>Easy Access</h3>
+            <p>Get your digital download and setup guide by email after your order is confirmed.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="product">
+      <div class="container">
+        <div class="product-wrap">
+          <div class="product-preview" aria-label="Illustrative preview of the Ryvx Tweaks app">
+            <div class="preview-window">
+              <div class="window-top">
+                <span class="window-dot"></span>
+                <span class="window-dot"></span>
+                <span class="window-dot"></span>
+                <span class="window-title">RYVX TWEAKS</span>
+              </div>
+              <div class="preview-row">
+                <span>System Information</span>
+                <span class="preview-pill">VIEW</span>
+              </div>
+              <div class="preview-row">
+                <span>Game Mode</span>
+                <span class="preview-pill">REVIEW</span>
+              </div>
+              <div class="preview-row">
+                <span>Capture Settings</span>
+                <span class="preview-pill">REVIEW</span>
+              </div>
+              <div class="preview-row">
+                <span>Setup Instructions</span>
+                <span class="preview-pill">OPEN</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-info">
+            <div class="section-kicker">Digital Download</div>
+            <h2>Ryvx Tweaks Pack</h2>
+            <p>
+              A downloadable pack with the Ryvx Tweaks app and a guide
+              explaining its features, setup, and supported settings.
+            </p>
+
+            <ul class="product-list">
+              <li><span class="check">✓</span><span>Ryvx Tweaks app files</span></li>
+              <li><span class="check">✓</span><span>Step-by-step setup instructions</span></li>
+              <li><span class="check">✓</span><span>Explanations of included settings</span></li>
+              <li><span class="check">✓</span><span>Download link delivered by email after payment</span></li>
+            </ul>
+
+            <div class="price-row">
+              <span class="price">$8.99</span>
+              <span class="price-caption">one-time purchase</span>
+            </div>
+
+            <!-- Replace CHECKOUT_URL with your real hosted checkout URL -->
+            <a class="button button-primary"
+               href="CHECKOUT_URL"
+               target="_blank"
+               rel="noopener noreferrer">
+              Buy Ryvx Tweaks <span>↗</span>
+            </a>
+
+            <div class="secure-note">
+              Checkout and digital delivery are handled by the payment platform.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">Questions</div>
+          <h2>Frequently asked questions</h2>
+          <p>Useful details before purchasing.</p>
+        </div>
+
+        <div class="faq-list">
+          <details>
+            <summary>How do I receive my purchase?</summary>
+            <p>After the checkout platform confirms your payment, it sends a delivery email to the address you used at checkout. Follow the included download and setup instructions.</p>
+          </details>
+
+          <details>
+            <summary>Will this guarantee more FPS?</summary>
+            <p>No. Results depend on your hardware, games, drivers, and settings. The pack provides configuration options and guidance, not guaranteed performance improvements.</p>
+          </details>
+
+          <details>
+            <summary>Is it safe to use?</summary>
+            <p>Review the included instructions and each setting before applying it. Keep Windows security features enabled, and don't apply changes you don't understand.</p>
+          </details>
+
+          <details>
+            <summary>What if I don't receive the email?</summary>
+            <p>Check your spam or junk folder and verify the email address entered at checkout. If you still need help, contact support through the Ryvx Discord server.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="support-box">
+          <div class="section-kicker">Need help?</div>
+          <h2>Join the Ryvx community.</h2>
+          <p>Have a question about the product or need help finding the instructions? Visit the Ryvx Discord server.</p>
+          <a class="button button-primary"
+             href="https://discord.gg/qN5YCF2BEQ"
+             target="_blank" rel="noopener noreferrer">
+            Join Ryvx Discord ↗
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="year">2026</span> Ryvx Tweaks. All rights reserved.</span>
+      <span>Independent digital product. No performance results are guaranteed.</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
