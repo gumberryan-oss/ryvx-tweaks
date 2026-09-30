@@ -4,623 +4,188 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090711">
-  <meta name="description" content="Ryvx Tweaks — a gaming-focused Windows toolkit.">
-  <title>Ryvx Tweaks | Performance Starts Here</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>Ryvx Tweaks | Gaming Toolkit</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
   <style>
-    :root {
-      --bg: #090711;
-      --panel: #141020;
-      --purple: #9c5cff;
-      --purple-light: #c7a5ff;
-      --text: #f8f5ff;
-      --muted: #a69eb7;
-      --border: rgba(255,255,255,.09);
-    }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
-
+    html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: #090711;
+      color: #f8f5ff;
       font-family: Inter, Arial, sans-serif;
       line-height: 1.6;
     }
-
     a { color: inherit; text-decoration: none; }
-    button { font: inherit; }
-
-    .container {
-      width: min(1120px, calc(100% - 40px));
-      margin: auto;
-    }
-
+    .container { width: min(1100px, calc(100% - 40px)); margin: auto; }
     header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(9,7,17,.92);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(9,7,17,.94);
+      border-bottom: 1px solid #292136;
+      backdrop-filter: blur(14px);
     }
-
-    .navbar {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+    nav {
+      min-height: 75px; display: flex; align-items: center;
+      justify-content: space-between; gap: 20px;
     }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-size: 19px;
-      font-weight: 900;
-      letter-spacing: -.7px;
-    }
-
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 19px; }
     .logo-icon {
-      display: grid;
-      place-items: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: linear-gradient(135deg,#c08aff,#7035df);
-      box-shadow: 0 0 25px rgba(156,92,255,.28);
+      width: 40px; height: 40px; display: grid; place-items: center;
+      border-radius: 12px; background: linear-gradient(135deg,#c18aff,#7135e6);
+      box-shadow: 0 0 25px #9c5cff33;
     }
-
-    .purple { color: var(--purple-light); }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 27px;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 600;
-    }
-
+    .purple { color: #b98aff; }
+    .nav-links { display: flex; align-items: center; gap: 25px; color: #aaa1b9; font-size: 13px; font-weight: 600; }
     .nav-links a:hover { color: white; }
-
     .btn {
-      min-height: 46px;
-      padding: 0 21px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      border: 1px solid transparent;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: .2s ease;
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 47px; padding: 0 22px; border-radius: 11px;
+      font-size: 13px; font-weight: 800; transition: .2s;
     }
-
     .btn-primary {
-      color: white;
-      background: linear-gradient(120deg,#a96aff,#7139e6);
-      box-shadow: 0 8px 25px rgba(130,65,230,.2);
+      color: white; background: linear-gradient(120deg,#aa69ff,#7138e8);
+      box-shadow: 0 8px 25px #8a4cff25;
     }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(130,65,230,.35);
-    }
-
-    .btn-secondary {
-      color: white;
-      background: rgba(255,255,255,.04);
-      border-color: var(--border);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255,255,255,.09);
-      transform: translateY(-2px);
-    }
-
-    .menu-button {
-      display: none;
-      padding: 8px 12px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--panel);
-      color: white;
-      cursor: pointer;
-    }
-
-    /* HERO */
-
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 30px #8a4cff50; }
+    .btn-outline { border: 1px solid #393044; background: #ffffff08; }
+    .btn-outline:hover { background: #ffffff15; }
     .hero {
-      position: relative;
-      padding: 105px 0 95px;
-      overflow: hidden;
+      min-height: 600px; display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      background: radial-gradient(ellipse at 78% 40%,#57259a30,transparent 40%);
     }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      right: -150px;
-      top: -180px;
-      border-radius: 50%;
-      background: rgba(125,55,225,.19);
-      filter: blur(100px);
-      pointer-events: none;
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 45px; padding: 85px 0; }
+    .tag {
+      display: inline-block; padding: 7px 13px; border: 1px solid #9c5cff50;
+      border-radius: 30px; color: #c5a5ff; background: #9c5cff12;
+      font-size: 10px; font-weight: 800; letter-spacing: 1.2px;
     }
-
-    .hero-grid {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      align-items: center;
-      gap: 55px;
+    h1 { margin: 23px 0 18px; font-size: clamp(43px,6vw,72px); line-height: 1.02; letter-spacing: -3.5px; font-weight: 900; }
+    .gradient {
+      background: linear-gradient(90deg,#d5baff,#9954ff,#e4cfff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
     }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 7px 13px;
-      border: 1px solid rgba(174,120,255,.25);
-      border-radius: 50px;
-      background: rgba(156,92,255,.08);
-      color: var(--purple-light);
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
+    .hero p { max-width: 490px; color: #aaa1b9; font-size: 15px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .note { margin-top: 17px; font-size: 11px !important; color: #81788f !important; }
+    .app {
+      padding: 14px; border: 1px solid #a878ff35; border-radius: 20px;
+      background: linear-gradient(145deg,#211831,#100d18);
+      box-shadow: 0 25px 80px #0008,0 0 50px #9c5cff12;
     }
-
-    .eyebrow-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #ad78ff;
-      box-shadow: 0 0 12px #ad78ff;
+    .app-top { display: flex; justify-content: space-between; color: #b9afc8; font-size: 10px; padding: 5px 8px 15px; }
+    .dots { display: flex; gap: 5px; }
+    .dots i { width: 7px; height: 7px; border-radius: 50%; background: #77658c; }
+    .app-body { display: grid; grid-template-columns: 105px 1fr; min-height: 290px; border: 1px solid #ffffff10; border-radius: 12px; overflow: hidden; background: #0d0a14; }
+    .sidebar { padding: 15px 9px; background: #151020; border-right: 1px solid #ffffff10; }
+    .side-title { color: #c6a4ff; font-size: 11px; font-weight: 900; margin-bottom: 18px; }
+    .side-link { padding: 8px 6px; margin: 5px 0; border-radius: 7px; color: #92899f; font-size: 9px; }
+    .side-link.active { color: #e2d0ff; background: #9c5cff26; }
+    .app-main { padding: 20px 15px; }
+    .app-main h3 { font-size: 16px; }
+    .app-main p { color: #8c8299; font-size: 9px; margin: 3px 0 16px; }
+    .mock-card { padding: 12px; margin-bottom: 10px; border: 1px solid #ffffff10; border-radius: 9px; background: #171220; }
+    .mock-card b { display: block; font-size: 10px; }
+    .mock-card span { color: #93899f; font-size: 8px; }
+    section { padding: 85px 0; }
+    .alt { background: #ffffff04; border-top: 1px solid #ffffff09; border-bottom: 1px solid #ffffff09; }
+    .section-title { text-align: center; max-width: 650px; margin: 0 auto 40px; }
+    .kicker { color: #b98aff; font-size: 10px; font-weight: 900; letter-spacing: 1.5px; }
+    h2 { margin: 10px 0; font-size: clamp(30px,4vw,44px); line-height: 1.15; letter-spacing: -1.7px; }
+    .section-title p { color: #aaa1b9; font-size: 14px; }
+    .features { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .feature {
+      padding: 24px; border: 1px solid #ffffff12; border-radius: 15px;
+      background: linear-gradient(145deg,#ffffff09,#ffffff03);
+      transition: .2s;
     }
-
-    h1 {
-      margin: 23px 0 18px;
-      font-size: clamp(44px,6vw,73px);
-      font-weight: 900;
-      letter-spacing: -4px;
-      line-height: 1.02;
-    }
-
-    .gradient-text {
-      background: linear-gradient(100deg,#d2b3ff,#8d4dff,#e0caff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-description {
-      max-width: 520px;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 30px;
-    }
-
-    .hero-note {
-      margin-top: 18px;
-      color: #827b91;
-      font-size: 11px;
-    }
-
-    /* APP PREVIEW */
-
-    .app-preview {
-      padding: 14px;
-      border: 1px solid rgba(175,130,255,.2);
-      border-radius: 22px;
-      background: linear-gradient(145deg,#211832,#100d19);
-      box-shadow: 0 25px 90px rgba(0,0,0,.4),0 0 55px rgba(130,70,235,.13);
-      transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
-    }
-
-    .preview-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 7px 8px 15px;
-      color: #bdb5cc;
-      font-size: 10px;
-    }
-
-    .window-dots { display: flex; gap: 5px; }
-    .window-dots span {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #665879;
-    }
-
-    .preview-window {
-      display: grid;
-      grid-template-columns: 105px 1fr;
-      min-height: 305px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      background: #0d0b15;
-    }
-
-    .preview-sidebar {
-      padding: 15px 9px;
-      border-right: 1px solid var(--border);
-      background: #151020;
-    }
-
-    .preview-brand {
-      margin-bottom: 20px;
-      color: var(--purple-light);
-      font-size: 11px;
-      font-weight: 900;
-    }
-
-    .preview-link {
-      margin: 5px 0;
-      padding: 8px 7px;
-      border-radius: 7px;
-      color: #958ba5;
-      font-size: 9px;
-    }
-
-    .preview-link.active {
-      color: #e0ccff;
-      background: rgba(156,92,255,.17);
-    }
-
-    .preview-content { padding: 19px; }
-    .preview-heading { font-size: 16px; font-weight: 800; }
-    .preview-caption {
-      margin: 3px 0 17px;
-      color: #837b91;
-      font-size: 9px;
-    }
-
-    .preview-card {
-      margin-bottom: 10px;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      background: #15111f;
-    }
-
-    .preview-card strong { display: block; font-size: 10px; }
-    .preview-card small {
-      display: block;
-      margin-top: 3px;
-      color: #8d859c;
-      font-size: 8px;
-    }
-
-    .preview-tag {
-      float: right;
-      color: #b998ff;
-      font-size: 8px;
-    }
-
-    .preview-bar {
-      height: 5px;
-      margin-top: 10px;
-      border-radius: 9px;
-      background: #30243e;
-      overflow: hidden;
-    }
-
-    .preview-bar span {
-      display: block;
-      width: 72%;
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg,#7138e8,#c49aff);
-    }
-
-    /* SECTIONS */
-
-    .section { padding: 85px 0; }
-
-    .section-alt {
-      background: rgba(255,255,255,.018);
-      border-top: 1px solid rgba(255,255,255,.035);
-      border-bottom: 1px solid rgba(255,255,255,.035);
-    }
-
-    .section-heading {
-      max-width: 650px;
-      margin: 0 auto 42px;
-      text-align: center;
-    }
-
-    .section-kicker {
-      color: #b994ff;
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    h2 {
-      margin: 10px 0 12px;
-      font-size: clamp(30px,4vw,45px);
-      line-height: 1.12;
-      letter-spacing: -1.8px;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* FEATURES */
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 16px;
-    }
-
-    .feature-card {
-      padding: 24px;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
-      transition: .2s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(174,120,255,.35);
-    }
-
+    .feature:hover { transform: translateY(-4px); border-color: #9c5cff65; }
     .feature-icon {
-      display: grid;
-      place-items: center;
-      width: 43px;
-      height: 43px;
-      margin-bottom: 18px;
-      border: 1px solid rgba(172,120,255,.2);
-      border-radius: 12px;
-      background: rgba(156,92,255,.1);
-      color: #c29bff;
-      font-size: 20px;
+      display: grid; place-items: center; width: 43px; height: 43px;
+      margin-bottom: 15px; border-radius: 12px; color: #c5a0ff;
+      background: #9c5cff19; font-size: 20px;
     }
-
-    .feature-card h3 { margin-bottom: 8px; font-size: 15px; }
-    .feature-card p { color: var(--muted); font-size: 12px; }
-
-    /* PRODUCT */
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: 1fr .85fr;
-      align-items: center;
-      gap: 40px;
-    }
-
-    .product-copy p { color: var(--muted); font-size: 14px; }
-
-    .check-list {
-      display: grid;
-      gap: 12px;
-      margin: 22px 0;
-      list-style: none;
-      color: #d7d1e1;
-      font-size: 13px;
-    }
-
-    .check-list li::before {
-      content: "✓";
-      margin-right: 10px;
-      color: #b994ff;
-      font-weight: 900;
-    }
-
+    .feature h3 { font-size: 15px; margin-bottom: 7px; }
+    .feature p { color: #aaa1b9; font-size: 12px; }
+    .product-grid { display: grid; grid-template-columns: 1fr .8fr; align-items: center; gap: 45px; }
+    .product-copy p { color: #aaa1b9; font-size: 14px; }
+    .checks { list-style: none; margin: 20px 0; display: grid; gap: 10px; color: #ded7e9; font-size: 13px; }
+    .checks li::before { content: "✓"; color: #b98aff; margin-right: 10px; font-weight: 900; }
     .product-card {
-      padding: 29px;
-      border: 1px solid rgba(177,128,255,.25);
-      border-radius: 20px;
-      background: radial-gradient(ellipse at top,rgba(139,76,255,.16),transparent 65%),#141020;
-      box-shadow: 0 20px 65px rgba(0,0,0,.25);
+      padding: 28px; border: 1px solid #aa78ff45; border-radius: 19px;
+      background: radial-gradient(ellipse at top,#9c5cff22,transparent 65%),#151020;
+      box-shadow: 0 20px 60px #0005;
     }
-
-    .product-label {
-      color: #b994ff;
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 1.3px;
-      text-transform: uppercase;
-    }
-
-    .product-name { margin-top: 10px; font-size: 25px; font-weight: 900; }
-
-    .price {
-      margin: 15px 0;
-      font-size: 45px;
-      font-weight: 900;
-      letter-spacing: -2px;
-      line-height: 1.1;
-    }
-
-    .price small {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0;
-    }
-
-    .product-card p { color: var(--muted); font-size: 12px; }
-    .product-card .btn { width: 100%; margin-top: 16px; }
-
-    /* STEPS */
-
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 16px;
-    }
-
-    .step-card {
-      padding: 24px;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: var(--panel);
-    }
-
-    .step-number {
-      color: #a975ff;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
-
-    .step-card h3 { margin: 12px 0 7px; font-size: 15px; }
-    .step-card p { color: var(--muted); font-size: 12px; }
-
-    /* FAQ */
-
-    .faq-list {
-      display: grid;
-      max-width: 760px;
-      gap: 10px;
-      margin: auto;
-    }
-
-    details {
-      padding: 17px 20px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--panel);
-    }
-
+    .product-label { color: #c4a2ff; font-size: 10px; font-weight: 900; letter-spacing: 1.3px; }
+    .product-card h3 { margin-top: 9px; font-size: 24px; }
+    .price { font-size: 44px; font-weight: 900; letter-spacing: -2px; margin: 12px 0; }
+    .price small { color: #aaa1b9; font-size: 12px; font-weight: 500; letter-spacing: 0; }
+    .product-card p { color: #aaa1b9; font-size: 12px; }
+    .product-card .btn { width: 100%; margin-top: 18px; }
+    .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .step { padding: 23px; border: 1px solid #ffffff12; border-radius: 15px; background: #151020; }
+    .step-number { color: #b98aff; font-size: 12px; font-weight: 900; }
+    .step h3 { margin: 10px 0 6px; font-size: 15px; }
+    .step p { color: #aaa1b9; font-size: 12px; }
+    .faq { max-width: 750px; margin: auto; display: grid; gap: 10px; }
+    details { padding: 17px 19px; border: 1px solid #ffffff12; border-radius: 11px; background: #151020; }
     summary { cursor: pointer; font-size: 13px; font-weight: 700; }
-    details p { margin-top: 12px; color: var(--muted); font-size: 12px; }
-
-    /* COMMUNITY */
-
-    .community-box {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 25px;
-      padding: 32px;
-      border: 1px solid rgba(169,113,255,.22);
-      border-radius: 20px;
-      background: radial-gradient(ellipse at right,rgba(125,62,232,.16),transparent 60%),var(--panel);
+    details p { color: #aaa1b9; font-size: 12px; margin-top: 10px; }
+    .community {
+      display: flex; align-items: center; justify-content: space-between; gap: 25px;
+      padding: 30px; border: 1px solid #a878ff35; border-radius: 18px;
+      background: radial-gradient(ellipse at right,#8a4cff20,transparent 60%),#151020;
     }
-
-    .community-box h2 { margin: 0 0 8px; font-size: 27px; }
-    .community-box p { color: var(--muted); font-size: 13px; }
-    .community-actions { display: flex; flex-wrap: wrap; gap: 10px; }
-
-    /* FOOTER */
-
-    footer {
-      padding: 25px 0;
-      border-top: 1px solid var(--border);
-      color: #827b91;
-      font-size: 11px;
-    }
-
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
-
-    .footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+    .community h2 { font-size: 27px; margin: 5px 0; }
+    .community p { color: #aaa1b9; font-size: 13px; }
+    footer { border-top: 1px solid #ffffff12; padding: 23px 0; color: #898195; font-size: 11px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+    .footer-links { display: flex; gap: 17px; }
     .footer-links a:hover { color: white; }
-
-    @media (max-width:850px) {
-      .hero-grid, .product-grid { grid-template-columns: 1fr; }
-      .hero-grid { gap: 40px; }
-      .app-preview {
-        max-width: 600px;
-        width: 100%;
-        margin: auto;
-        transform: none;
+    @media(max-width:800px) {
+      .hero-grid,.product-grid { grid-template-columns: 1fr; }
+      .app { max-width: 600px; width: 100%; margin: auto; }
+      .features { grid-template-columns: repeat(2,1fr); }
+    }
+    @media(max-width:600px) {
+      .container { width: calc(100% - 30px); }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex; position: absolute; top: 75px; left: 0; right: 0;
+        padding: 15px; flex-direction: column; align-items: stretch;
+        background: #100d19; border-bottom: 1px solid #ffffff15;
       }
-      .feature-grid { grid-template-columns: repeat(2,1fr); }
+      .nav-links a { padding: 9px; }
+      .menu { display: block !important; }
+      .nav-cta { display: none; }
+      .hero-grid { padding: 65px 0; }
+      h1 { letter-spacing: -2px; }
+      section { padding: 65px 0; }
+      .features,.steps { grid-template-columns: 1fr; }
+      .community,.footer-inner { align-items: flex-start; flex-direction: column; }
+      .app-body { grid-template-columns: 83px 1fr; }
     }
-
-    @media (max-width:650px) {
-      .container { width: min(100% - 30px,1120px); }
-      .navbar { min-height: 66px; }
-      .menu-button { display: block; }
-
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 66px;
-        left: 0;
-        right: 0;
-        padding: 14px;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        background: #100d1b;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .nav-links.open { display: flex; }
-      .nav-links a { padding: 12px; }
-      .nav-right > .btn { display: none; }
-      .hero { padding: 70px 0 60px; }
-      h1 { letter-spacing: -2.5px; }
-      .hero-description { font-size: 14px; }
-      .section { padding: 65px 0; }
-      .feature-grid, .steps-grid { grid-template-columns: 1fr; }
-      .community-box { align-items: flex-start; flex-direction: column; padding: 25px; }
-      .footer-inner { align-items: flex-start; flex-direction: column; }
-      .preview-window { grid-template-columns: 83px 1fr; min-height: 270px; }
-      .preview-content { padding: 13px; }
-    }
-
-    @media (prefers-reduced-motion:reduce) {
-      html { scroll-behavior: auto; }
-      *,*::before,*::after { transition-duration: .01ms !important; }
-    }
+    .menu { display: none; border: 1px solid #ffffff20; border-radius: 9px; padding: 8px 11px; background: #151020; color: white; cursor: pointer; }
   </style>
 </head>
-
 <body>
   <header>
-    <div class="container navbar">
-      <a class="logo" href="#home" aria-label="Ryvx Tweaks home">
-        <span class="logo-icon">R</span>
-        <span>RYVX <span class="purple">TWEAKS</span></span>
-      </a>
-
-      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
-        <a href="#features">Features</a>
-        <a href="#product">Product</a>
-        <a href="#steps">How It Works</a>
-        <a href="#faq">FAQ</a>
+    <div class="container">
+      <nav>
+        <a class="logo" href="index.html">
+          <span class="logo-icon">R</span>
+          <span>RYVX <span class="purple">TWEAKS</span></span>
+        </a>
+        <div class="nav-links" id="navLinks">
+          <a href="#features">Features</a>
+          <a href="#product">Product</a>
+          <a href="#steps">How It Works</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <a class="btn btn-primary nav-cta" href="./checkout.html">Get Tweaks ↗</a>
+          <button class="menu" id="menuButton" type="button" aria-label="Open menu">☰</button>
+        </div>
       </nav>
-
-      <div class="nav-right">
-        <a class="btn btn-primary" href="checkout.html">Get Tweaks ↗</a>
-        <button class="menu-button" id="menuButton" type="button"
-                aria-label="Open menu" aria-expanded="false">☰</button>
-      </div>
     </div>
   </header>
 
@@ -628,119 +193,64 @@
     <section class="hero" id="home">
       <div class="container hero-grid">
         <div>
-          <div class="eyebrow"><span class="eyebrow-dot"></span> Built for gamers</div>
-          <h1>MAKE YOUR PC<br><span class="gradient-text">FEEL READY.</span></h1>
-          <p class="hero-description">
-            Meet Ryvx Tweaks — a straightforward Windows toolkit
-            designed to help gamers review system settings and make
-            informed changes to their setup.
-          </p>
-
-          <div class="hero-buttons">
-            <a class="btn btn-primary" href="checkout.html">Get Tweaks ↗</a>
-            <a class="btn btn-secondary"
-               href="https://www.youtube.com/@Ryvxesports"
-               target="_blank" rel="noopener noreferrer">▶ Watch on YouTube</a>
+          <span class="tag">✦ BUILT FOR GAMERS</span>
+          <h1>MAKE YOUR PC<br><span class="gradient">FEEL READY.</span></h1>
+          <p>Meet Ryvx Tweaks — a gaming-focused Windows toolkit that helps you review system information and explore settings in one organized interface.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="./checkout.html">Get Tweaks ↗</a>
+            <a class="btn btn-outline" href="https://www.youtube.com/@Ryvxesports" target="_blank" rel="noopener noreferrer">▶ Watch YouTube</a>
           </div>
-          <p class="hero-note">Windows toolkit · Clear guides · User-controlled settings</p>
+          <p class="note">Windows toolkit · Clear guides · User-controlled settings</p>
         </div>
 
-        <div class="app-preview" aria-label="Ryvx Tweaks app preview">
-          <div class="preview-top">
-            <div class="window-dots"><span></span><span></span><span></span></div>
-            <span>RYVX TWEAKS / CONTROL PANEL</span>
-            <span>●</span>
-          </div>
-
-          <div class="preview-window">
-            <aside class="preview-sidebar">
-              <div class="preview-brand">✦ RYVX</div>
-              <div class="preview-link active">⌂ &nbsp; Welcome</div>
-              <div class="preview-link">◈ &nbsp; Tweaks</div>
-              <div class="preview-link">▤ &nbsp; System Info</div>
-              <div class="preview-link">◎ &nbsp; Discord</div>
-              <div class="preview-link">▶ &nbsp; YouTube</div>
+        <div class="app">
+          <div class="app-top"><span class="dots"><i></i><i></i><i></i></span><span>RYVX TWEAKS / CONTROL PANEL</span><span>●</span></div>
+          <div class="app-body">
+            <aside class="sidebar">
+              <div class="side-title">✦ RYVX</div>
+              <div class="side-link active">⌂ &nbsp; Welcome</div>
+              <div class="side-link">◈ &nbsp; Tweaks</div>
+              <div class="side-link">▤ &nbsp; System Info</div>
+              <div class="side-link">◎ &nbsp; Discord</div>
+              <div class="side-link">▶ &nbsp; YouTube</div>
             </aside>
-
-            <div class="preview-content">
-              <div class="preview-heading">Welcome back.</div>
-              <div class="preview-caption">Your setup, your settings, your control.</div>
-
-              <div class="preview-card">
-                <span class="preview-tag">READY</span>
-                <strong>System overview</strong>
-                <small>Review your Windows configuration</small>
-                <div class="preview-bar"><span></span></div>
-              </div>
-
-              <div class="preview-card">
-                <strong>Settings guide</strong>
-                <small>Explore available options and instructions</small>
-              </div>
-
-              <div class="preview-card">
-                <strong>Ryvx community</strong>
-                <small>Connect with Ryvx Esports</small>
-              </div>
+            <div class="app-main">
+              <h3>Welcome back.</h3>
+              <p>Your setup, your settings, your control.</p>
+              <div class="mock-card"><b>System overview</b><span>Review your Windows configuration</span></div>
+              <div class="mock-card"><b>Settings guide</b><span>Explore available options and instructions</span></div>
+              <div class="mock-card"><b>Ryvx community</b><span>Connect with Ryvx Esports</span></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section section-alt" id="features">
+    <section class="alt" id="features">
       <div class="container">
-        <div class="section-heading">
-          <div class="section-kicker">Why Ryvx Tweaks</div>
+        <div class="section-title">
+          <div class="kicker">WHY RYVX TWEAKS</div>
           <h2>A simpler way to manage your setup.</h2>
           <p>Explore system information and Windows settings from one organized toolkit.</p>
         </div>
-
-        <div class="feature-grid">
-          <article class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3>Gaming-focused</h3>
-            <p>Settings and guidance organized with PC gaming in mind.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon">▤</div>
-            <h3>Easy to navigate</h3>
-            <p>A clean interface that helps you find information quickly.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon">⌘</div>
-            <h3>System information</h3>
-            <p>Review key details about your Windows system and hardware.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon">◈</div>
-            <h3>Guided settings</h3>
-            <p>Understand what a setting does before deciding to change it.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon">♧</div>
-            <h3>Community access</h3>
-            <p>Find the Ryvx YouTube channel and Discord community.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon">✓</div>
-            <h3>You stay in control</h3>
-            <p>Review changes carefully and choose what's right for your PC.</p>
-          </article>
+        <div class="features">
+          <article class="feature"><div class="feature-icon">⚡</div><h3>Gaming-focused</h3><p>Settings and guidance organized with PC gaming in mind.</p></article>
+          <article class="feature"><div class="feature-icon">▤</div><h3>Easy to navigate</h3><p>A clean interface that helps you find information quickly.</p></article>
+          <article class="feature"><div class="feature-icon">⌘</div><h3>System information</h3><p>Review key details about your Windows system and hardware.</p></article>
+          <article class="feature"><div class="feature-icon">◈</div><h3>Guided settings</h3><p>Understand what a setting does before deciding to change it.</p></article>
+          <article class="feature"><div class="feature-icon">♧</div><h3>Community access</h3><p>Find the Ryvx YouTube channel and Discord community.</p></article>
+          <article class="feature"><div class="feature-icon">✓</div><h3>You stay in control</h3><p>Review changes carefully and choose what's right for your PC.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="product">
+    <section id="product">
       <div class="container product-grid">
         <div class="product-copy">
-          <div class="section-kicker">The toolkit</div>
+          <div class="kicker">THE TOOLKIT</div>
           <h2>Take your setup into your own hands.</h2>
-          <p>
-            Ryvx Tweaks brings system information, Windows setting
-            guidance, and community links into one simple interface.
-          </p>
-          <ul class="check-list">
+          <p>Ryvx Tweaks brings system information, Windows setting guidance, and community links into one simple interface.</p>
+          <ul class="checks">
             <li>Organized tweaking interface</li>
             <li>System information page</li>
             <li>Settings guidance and descriptions</li>
@@ -748,89 +258,58 @@
           </ul>
           <p>Performance depends on your hardware, games, drivers, and settings. No specific FPS increase is guaranteed.</p>
         </div>
-
         <div class="product-card">
-          <div class="product-label">Ryvx Tweaks</div>
-          <div class="product-name">Gaming Toolkit</div>
-          <div class="price">$8.99 <small>one-time price</small></div>
-          <p>Review the toolkit details and compatibility before purchasing.</p>
-          <a class="btn btn-primary" href="checkout.html">Continue to Checkout ↗</a>
+          <div class="product-label">RYVX TWEAKS</div>
+          <h3>Gaming Toolkit</h3>
+          <div class="price">$8.99 <small>one-time</small></div>
+          <p>Review the product details and compatibility before purchasing.</p>
+          <a class="btn btn-primary" href="./checkout.html">Continue to Checkout ↗</a>
         </div>
       </div>
     </section>
 
-    <section class="section section-alt" id="steps">
+    <section class="alt" id="steps">
       <div class="container">
-        <div class="section-heading">
-          <div class="section-kicker">Getting started</div>
+        <div class="section-title">
+          <div class="kicker">GETTING STARTED</div>
           <h2>Three simple steps.</h2>
-          <p>From choosing the pack to opening your download.</p>
+          <p>From choosing the toolkit to getting started.</p>
         </div>
-
-        <div class="steps-grid">
-          <article class="step-card">
-            <div class="step-number">01</div>
-            <h3>Choose your pack</h3>
-            <p>Read the product details and compatibility notes before purchasing.</p>
-          </article>
-          <article class="step-card">
-            <div class="step-number">02</div>
-            <h3>Complete checkout</h3>
-            <p>Use the secure checkout page and provide an email for delivery when payment is configured.</p>
-          </article>
-          <article class="step-card">
-            <div class="step-number">03</div>
-            <h3>Follow the guide</h3>
-            <p>Use the provided instructions to get started and review settings carefully.</p>
-          </article>
+        <div class="steps">
+          <article class="step"><div class="step-number">01</div><h3>Choose your pack</h3><p>Read the product details and compatibility notes before purchasing.</p></article>
+          <article class="step"><div class="step-number">02</div><h3>Complete checkout</h3><p>Use the secure payment provider once checkout has been configured.</p></article>
+          <article class="step"><div class="step-number">03</div><h3>Follow the guide</h3><p>Use the instructions to get started and review settings carefully.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="faq">
+    <section id="faq">
       <div class="container">
-        <div class="section-heading">
-          <div class="section-kicker">FAQ</div>
+        <div class="section-title">
+          <div class="kicker">FAQ</div>
           <h2>Questions? We've got you.</h2>
           <p>Quick information about Ryvx Tweaks.</p>
         </div>
-
-        <div class="faq-list">
-          <details>
-            <summary>What is Ryvx Tweaks?</summary>
-            <p>Ryvx Tweaks is a Windows toolkit that organizes system information and Windows setting guidance for gamers.</p>
-          </details>
-          <details>
-            <summary>Will it increase my FPS?</summary>
-            <p>Performance depends on your PC, game, drivers, and current settings. No particular FPS improvement is guaranteed.</p>
-          </details>
-          <details>
-            <summary>Is it compatible with every PC?</summary>
-            <p>Compatibility can vary by Windows version and hardware. Check the product's compatibility notes before using it.</p>
-          </details>
-          <details>
-            <summary>How do I get the toolkit?</summary>
-            <p>Use the checkout page to review the product and payment information. A real payment link and delivery process must be configured before purchases can be completed.</p>
-          </details>
+        <div class="faq">
+          <details><summary>What is Ryvx Tweaks?</summary><p>A Windows toolkit that organizes system information and Windows setting guidance for gamers.</p></details>
+          <details><summary>Will it increase my FPS?</summary><p>Performance depends on your PC, game, drivers, and current settings. No specific FPS improvement is guaranteed.</p></details>
+          <details><summary>Is it compatible with every PC?</summary><p>Compatibility can vary by Windows version and hardware. Check the product compatibility notes before using it.</p></details>
+          <details><summary>How do I get the toolkit?</summary><p>Click Get Tweaks to open the checkout page. Payment and digital delivery need to be configured before accepting orders.</p></details>
         </div>
       </div>
     </section>
 
-    <section class="section section-alt">
+    <section class="alt">
       <div class="container">
-        <div class="community-box">
+        <div class="community">
           <div>
-            <div class="section-kicker">Join the community</div>
+            <div class="kicker">JOIN THE COMMUNITY</div>
             <h2>Stay connected with Ryvx.</h2>
             <p>Follow the channel and join the Discord community for updates.</p>
           </div>
-          <div class="community-actions">
-            <a class="btn btn-primary"
-               href="https://www.youtube.com/@Ryvxesports"
-               target="_blank" rel="noopener noreferrer">▶ YouTube</a>
-            <a class="btn btn-secondary"
-               href="https://discord.gg/qN5YCF2BEQ"
-               target="_blank" rel="noopener noreferrer">Join Discord ↗</a>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://www.youtube.com/@Ryvxesports" target="_blank" rel="noopener noreferrer">▶ YouTube</a>
+            <a class="btn btn-outline" href="https://discord.gg/qN5YCF2BEQ" target="_blank" rel="noopener noreferrer">Join Discord ↗</a>
           </div>
         </div>
       </div>
@@ -839,38 +318,32 @@
 
   <footer>
     <div class="container footer-inner">
-      <a class="logo" href="#home">
-        <span class="logo-icon">R</span>
-        <span>RYVX <span class="purple">TWEAKS</span></span>
-      </a>
+      <a class="logo" href="index.html"><span class="logo-icon">R</span><span>RYVX <span class="purple">TWEAKS</span></span></a>
       <span>© <span id="year"></span> Ryvx Tweaks. All rights reserved.</span>
       <div class="footer-links">
         <a href="https://www.youtube.com/@Ryvxesports" target="_blank" rel="noopener noreferrer">YouTube</a>
         <a href="https://discord.gg/qN5YCF2BEQ" target="_blank" rel="noopener noreferrer">Discord</a>
-        <a href="#home">Back to top ↑</a>
       </div>
     </div>
   </footer>
 
   <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
     const menuButton = document.getElementById("menuButton");
     const navLinks = document.getElementById("navLinks");
 
     menuButton.addEventListener("click", function () {
-      const open = navLinks.classList.toggle("open");
-      menuButton.setAttribute("aria-expanded", String(open));
-      menuButton.textContent = open ? "✕" : "☰";
+      navLinks.classList.toggle("open");
+      menuButton.textContent = navLinks.classList.contains("open") ? "✕" : "☰";
     });
 
     navLinks.querySelectorAll("a").forEach(function (link) {
       link.addEventListener("click", function () {
         navLinks.classList.remove("open");
-        menuButton.setAttribute("aria-expanded", "false");
         menuButton.textContent = "☰";
       });
     });
-
-    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
