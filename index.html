@@ -1,590 +1,432 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#090713">
-  <meta name="description" content="Ryvx Tweaks — a gaming-focused Windows customization app.">
-  <title>Ryvx Tweaks | Take Control</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090711">
+  <meta name="description" content="Ryvx Tweaks — a Windows tweaking guide and toolkit built for gamers.">
+  <title>Ryvx Tweaks | Performance Starts Here</title>
+  <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* Core styles so the page remains usable even if your old CSS differs */
+    :root {
+      --bg: #090711;
+      --panel: #131020;
+      --panel2: #1a152b;
+      --purple: #9b5cff;
+      --purple2: #7138e8;
+      --text: #f8f5ff;
+      --muted: #aaa3ba;
+      --border: rgba(255,255,255,.09);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: Inter, Arial, sans-serif; line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(1120px, calc(100% - 40px)); margin: auto; }
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(9,7,17,.88); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 900; font-size: 19px; letter-spacing: -.6px; }
+    .brand-mark {
+      display: grid; place-items: center; width: 39px; height: 39px; border-radius: 12px;
+      background: linear-gradient(135deg, #b47aff, #6b35df);
+      box-shadow: 0 0 25px rgba(155,92,255,.3); font-weight: 900;
+    }
+    .brand span:last-child em { color: var(--purple); font-style: normal; }
+    .nav-links { display: flex; align-items: center; gap: 28px; color: var(--muted); font-size: 13px; font-weight: 600; }
+    .nav-links a:hover { color: white; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn {
+      display: inline-flex; justify-content: center; align-items: center; gap: 9px;
+      min-height: 46px; padding: 0 20px; border-radius: 12px; border: 1px solid transparent;
+      font-size: 13px; font-weight: 800; cursor: pointer; transition: .2s ease;
+    }
+    .btn-primary { color: white; background: linear-gradient(135deg, #a66bff, #7138e8); box-shadow: 0 8px 25px rgba(130,70,235,.2); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(130,70,235,.35); }
+    .btn-secondary { border-color: var(--border); background: rgba(255,255,255,.04); color: white; }
+    .btn-secondary:hover { background: rgba(255,255,255,.08); }
+    .menu-toggle { display: none; background: none; border: 1px solid var(--border); color: white; border-radius: 10px; padding: 8px 12px; }
+    .hero { position: relative; overflow: hidden; padding: 100px 0 85px; }
+    .hero:before {
+      content: ""; position: absolute; width: 600px; height: 600px; border-radius: 50%;
+      background: rgba(116,57,220,.17); filter: blur(100px); top: -180px; right: -100px; pointer-events: none;
+    }
+    .hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 60px; }
+    .eyebrow { display: inline-flex; gap: 9px; align-items: center; padding: 7px 12px; border: 1px solid rgba(170,115,255,.25); border-radius: 99px; background: rgba(155,92,255,.08); color: #c5a2ff; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: #a66bff; box-shadow: 0 0 12px #a66bff; }
+    h1 { margin: 22px 0 18px; font-size: clamp(43px, 6vw, 72px); line-height: 1.02; letter-spacing: -4px; font-weight: 900; }
+    .gradient-text { background: linear-gradient(100deg, #c49aff, #8c50ff 60%, #e3cfff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-copy { max-width: 530px; color: var(--muted); font-size: 16px; }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .hero-note { margin-top: 18px; color: #827b91; font-size: 11px; }
+    .app-preview {
+      position: relative; padding: 14px; border: 1px solid rgba(178,135,255,.2); border-radius: 22px;
+      background: linear-gradient(145deg, rgba(36,26,57,.96), rgba(15,12,25,.98));
+      box-shadow: 0 25px 90px rgba(0,0,0,.45), 0 0 55px rgba(130,70,235,.13);
+      transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
+    }
+    .preview-top { display: flex; align-items: center; justify-content: space-between; padding: 7px 8px 15px; color: #c5bed2; font-size: 11px; }
+    .window-dots { display: flex; gap: 5px; }
+    .window-dots i { display: block; width: 7px; height: 7px; border-radius: 50%; background: #574b69; }
+    .preview-body { display: grid; grid-template-columns: 105px 1fr; min-height: 300px; overflow: hidden; border: 1px solid var(--border); border-radius: 14px; background: #0d0b15; }
+    .preview-side { padding: 15px 9px; background: #141020; border-right: 1px solid var(--border); }
+    .preview-logo { color: #c49aff; font-size: 10px; font-weight: 900; margin-bottom: 20px; }
+    .preview-nav { padding: 8px 7px; margin: 5px 0; border-radius: 7px; color: #8e879d; font-size: 9px; }
+    .preview-nav.active { background: rgba(155,92,255,.17); color: #d7c1ff; }
+    .preview-main { padding: 19px; }
+    .preview-title { font-size: 16px; font-weight: 800; }
+    .preview-sub { margin: 3px 0 17px; color: #837b91; font-size: 9px; }
+    .preview-card { padding: 12px; margin-bottom: 9px; border: 1px solid var(--border); border-radius: 9px; background: #15111f; }
+    .preview-card strong { display: block; font-size: 10px; }
+    .preview-card small { display: block; margin-top: 3px; color: #8d859c; font-size: 8px; }
+    .preview-status { float: right; color: #b998ff; font-size: 8px; }
+    .preview-bar { height: 5px; margin-top: 10px; border-radius: 8px; background: #2a2238; overflow: hidden; }
+    .preview-bar i { display: block; width: 72%; height: 100%; border-radius: 8px; background: linear-gradient(90deg,#7138e8,#c49aff); }
+    .section { padding: 85px 0; }
+    .section-alt { background: rgba(255,255,255,.018); border-top: 1px solid rgba(255,255,255,.035); border-bottom: 1px solid rgba(255,255,255,.035); }
+    .section-heading { max-width: 650px; margin: 0 auto 42px; text-align: center; }
+    .section-kicker { color: #b994ff; font-size: 11px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; }
+    h2 { margin: 10px 0 12px; font-size: clamp(30px,4vw,45px); line-height: 1.12; letter-spacing: -1.8px; }
+    .section-heading p { color: var(--muted); font-size: 14px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .feature-card { padding: 24px; border: 1px solid var(--border); border-radius: 16px; background: linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012)); }
+    .feature-icon { display: grid; place-items: center; width: 43px; height: 43px; margin-bottom: 18px; border: 1px solid rgba(172,120,255,.2); border-radius: 12px; background: rgba(155,92,255,.1); color: #c29bff; font-size: 20px; }
+    .feature-card h3 { margin: 0 0 8px; font-size: 15px; }
+    .feature-card p { margin: 0; color: var(--muted); font-size: 12px; }
+    .product-wrap { display: grid; grid-template-columns: 1fr .85fr; gap: 35px; align-items: center; }
+    .product-copy p { color: var(--muted); font-size: 14px; }
+    .check-list { display: grid; gap: 12px; margin: 22px 0; padding: 0; list-style: none; color: #d7d1e1; font-size: 13px; }
+    .check-list li:before { content: "✓"; color: #b994ff; font-weight: 900; margin-right: 10px; }
+    .product-card { padding: 28px; border: 1px solid rgba(177,128,255,.25); border-radius: 20px; background: radial-gradient(ellipse at top,rgba(139,76,255,.16),transparent 65%),#141020; box-shadow: 0 20px 65px rgba(0,0,0,.25); }
+    .product-label { color: #b994ff; font-size: 10px; font-weight: 900; letter-spacing: 1.3px; text-transform: uppercase; }
+    .product-name { margin: 10px 0 0; font-size: 25px; font-weight: 900; }
+    .price { margin: 15px 0; font-size: 44px; line-height: 1; font-weight: 900; letter-spacing: -2px; }
+    .price small { color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: 0; }
+    .product-card p { color: var(--muted); font-size: 12px; }
+    .product-card .btn { width: 100%; margin-top: 14px; }
+    .steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .step-card { padding: 24px; border: 1px solid var(--border); border-radius: 16px; background: var(--panel); }
+    .step-number { color: #a975ff; font-size: 12px; font-weight: 900; letter-spacing: 1px; }
+    .step-card h3 { margin: 12px 0 7px; font-size: 15px; }
+    .step-card p { margin: 0; color: var(--muted); font-size: 12px; }
+    .faq-list { max-width: 760px; margin: auto; display: grid; gap: 10px; }
+    details { padding: 17px 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
+    summary { cursor: pointer; font-size: 13px; font-weight: 700; }
+    details p { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+    .community-box { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding: 32px; border: 1px solid rgba(169,113,255,.22); border-radius: 20px; background: radial-gradient(ellipse at right,rgba(125,62,232,.16),transparent 60%),var(--panel); }
+    .community-box h2 { margin: 0 0 8px; font-size: 27px; }
+    .community-box p { margin: 0; color: var(--muted); font-size: 13px; }
+    .community-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .site-footer { padding: 25px 0; border-top: 1px solid var(--border); color: #827b91; font-size: 11px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+    .footer-links { display: flex; gap: 18px; }
+    .footer-links a:hover { color: white; }
+    @media(max-width:850px) {
+      .hero-grid,.product-wrap { grid-template-columns: 1fr; }
+      .hero-grid { gap: 40px; }
+      .app-preview { max-width: 600px; width: 100%; margin: auto; transform: none; }
+      .feature-grid { grid-template-columns: repeat(2,1fr); }
+      .nav-links { gap: 15px; }
+    }
+    @media(max-width:650px) {
+      .container { width: min(100% - 30px,1120px); }
+      .nav { height: 66px; }
+      .menu-toggle { display: block; }
+      .nav-links { display: none; position: absolute; top: 66px; left: 0; right: 0; padding: 15px; flex-direction: column; align-items: stretch; gap: 0; background: #100d1b; border-bottom: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 12px; }
+      .nav-actions .btn { display: none; }
+      .hero { padding: 70px 0 60px; }
+      h1 { letter-spacing: -2.5px; }
+      .hero-copy { font-size: 14px; }
+      .section { padding: 65px 0; }
+      .feature-grid,.steps-grid { grid-template-columns: 1fr; }
+      .community-box { align-items: flex-start; flex-direction: column; padding: 25px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+      .preview-body { grid-template-columns: 83px 1fr; min-height: 270px; }
+      .preview-main { padding: 13px; }
+    }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } *,*:before,*:after { transition-duration: .01ms !important; } }
+  </style>
 </head>
+
 <body>
-
-  <div class="top-glow"></div>
- <a
-  href="https://www.youtube.com/@Ryvxesports"
-  class="btn btn-primary"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  Get Tweaks
-</a>
-
   <header class="site-header">
-    <div class="wrap nav-wrap">
+    <div class="container nav">
       <a class="brand" href="#home" aria-label="Ryvx Tweaks home">
-        <span class="brand-icon">R</span>
-        <span>RYVX <b>TWEAKS</b></span>
+        <span class="brand-mark">R</span>
+        <span>RYVX <em>TWEAKS</em></span>
       </a>
 
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
-
-      <nav class="nav" id="nav">
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
         <a href="#features">Features</a>
-        <a href="#preview">Preview</a>
         <a href="#product">Product</a>
+        <a href="#steps">How it works</a>
         <a href="#faq">FAQ</a>
-        <a class="nav-cta" href="#product">Get Ryvx <span>↗</span></a>
       </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary" href="#product">Get Tweaks <span>↗</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      </div>
     </div>
   </header>
 
-  <main id="home">
-
-    <!-- HERO -->
-    <section class="hero wrap">
-      <div class="hero-copy">
-        <div class="eyebrow">
-          <i></i> PERFORMANCE · STABILITY · CONTROL
-        </div>
-
-        <h1>
-          TAKE CONTROL<br>
-          <span class="shine">OF YOUR SETUP.</span>
-        </h1>
-
-        <p class="hero-lead">
-          A gaming-focused Windows customization app made to help you
-          explore your system, understand your settings, and configure
-          your PC with confidence.
-        </p>
-
-        <div class="hero-buttons">
-          <a class="button primary" href="#product">
-            Explore Ryvx <span>→</span>
-          </a>
-          <a class="button secondary" href="#preview">
-            See the preview <span>⌄</span>
-          </a>
-        </div>
-
-        <div class="hero-points">
-          <span><b>✦</b> Clear guidance</span>
-          <span><b>◈</b> PC focused</span>
-          <span><b>⌘</b> Simple interface</span>
-        </div>
-      </div>
-
-      <!-- APP PREVIEW -->
-      <div class="hero-demo" id="preview">
-        <div class="orb"></div>
-
-        <div class="demo-window">
-          <div class="window-top">
-            <span class="window-name"><b>R</b> RYVX TWEAKS</span>
-            <span class="window-controls">
-              <i></i><i></i><i></i>
-            </span>
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-dot"></span> Built for gamers</div>
+          <h1>MAKE YOUR PC<br><span class="gradient-text">FEEL READY.</span></h1>
+          <p class="hero-copy">
+            Meet Ryvx Tweaks — a straightforward Windows tweaking toolkit
+            designed to help gamers review system settings and make informed changes.
+          </p>
+          <div class="hero-buttons">
+            <!-- This button now scrolls directly to the product section -->
+            <a class="btn btn-primary" href="#product">Get Tweaks <span>↗</span></a>
+            <a class="btn btn-secondary" href="https://www.youtube.com/@Ryvxesports" target="_blank" rel="noopener noreferrer">▶ Watch on YouTube</a>
           </div>
+          <p class="hero-note">Windows toolkit · Clear guides · User-controlled settings</p>
+        </div>
 
-          <div class="demo-body">
-            <aside class="demo-side">
-              <small>WORKSPACE</small>
-
-              <button class="demo-tab active" data-tab="home">
-                <span>⌂</span> Overview
-              </button>
-              <button class="demo-tab" data-tab="system">
-                <span>▣</span> System Info
-              </button>
-              <button class="demo-tab" data-tab="gaming">
-                <span>ϟ</span> Gaming
-              </button>
-              <button class="demo-tab" data-tab="windows">
-                <span>⊞</span> Windows
-              </button>
-              <button class="demo-tab" data-tab="settings">
-                <span>⚙</span> Settings
-              </button>
-
-              <div class="side-foot">RYVX / PREVIEW</div>
+        <div class="app-preview" aria-label="Ryvx Tweaks app preview">
+          <div class="preview-top">
+            <div class="window-dots"><i></i><i></i><i></i></div>
+            <span>RYVX TWEAKS / CONTROL PANEL</span>
+            <span>●</span>
+          </div>
+          <div class="preview-body">
+            <aside class="preview-side">
+              <div class="preview-logo">✦ RYVX</div>
+              <div class="preview-nav active">⌂ &nbsp; Welcome</div>
+              <div class="preview-nav">◈ &nbsp; Tweaks</div>
+              <div class="preview-nav">▣ &nbsp; System Info</div>
+              <div class="preview-nav">◎ &nbsp; Discord</div>
+              <div class="preview-nav">▶ &nbsp; YouTube</div>
             </aside>
-
-            <div class="demo-content">
-              <div class="demo-title">
-                <div>
-                  <h3 id="demoTitle">Welcome back.</h3>
-                  <p id="demoDesc">Your setup, organized in one place.</p>
-                </div>
-                <span class="live-pill"><i></i> DEMO</span>
+            <div class="preview-main">
+              <div class="preview-title">Welcome back.</div>
+              <div class="preview-sub">Your setup, your settings, your control.</div>
+              <div class="preview-card">
+                <span class="preview-status">READY</span>
+                <strong>System overview</strong>
+                <small>Review your Windows configuration</small>
+                <div class="preview-bar"><i></i></div>
               </div>
-
-              <div class="demo-cards" id="demoCards">
-                <article class="mini-card">
-                  <span>▣</span>
-                  <b>System overview</b>
-                  <small>Device details</small>
-                </article>
-                <article class="mini-card">
-                  <span>ϟ</span>
-                  <b>Gaming settings</b>
-                  <small>Configuration options</small>
-                </article>
-                <article class="mini-card">
-                  <span>⊞</span>
-                  <b>Windows tools</b>
-                  <small>Helpful preferences</small>
-                </article>
-                <article class="mini-card">
-                  <span>⚙</span>
-                  <b>App settings</b>
-                  <small>Manage your app</small>
-                </article>
+              <div class="preview-card">
+                <strong>Settings guide</strong>
+                <small>Explore available options and instructions</small>
               </div>
-
-              <div class="demo-status">
-                <span>RYVX TWEAKS</span>
-                <span>INTERACTIVE PREVIEW</span>
+              <div class="preview-card">
+                <strong>Ryvx community</strong>
+                <small>Connect with the Ryvx Esports community</small>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="float-chip chip-one">
-          <span>✦</span> Your PC. Your settings.
+    <section class="section section-alt" id="features">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">Why Ryvx Tweaks</div>
+          <h2>A simpler way to manage your setup.</h2>
+          <p>Explore system information and Windows settings from one organized toolkit.</p>
         </div>
-        <div class="float-chip chip-two">
-          <span>◈</span> Simple by design
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Gaming-focused</h3>
+            <p>Settings and guidance organized with PC gaming in mind.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">▤</div>
+            <h3>Easy to navigate</h3>
+            <p>A clean interface that helps you find information without digging through menus.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">⌘</div>
+            <h3>System information</h3>
+            <p>Review key details about your Windows system and hardware.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">◈</div>
+            <h3>Guided settings</h3>
+            <p>Understand what a setting does before deciding whether to change it.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">♧</div>
+            <h3>Community access</h3>
+            <p>Find the Ryvx Esports YouTube channel and Discord community.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-icon">✓</div>
+            <h3>You stay in control</h3>
+            <p>Review changes carefully and choose which settings are right for your PC.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- HIGHLIGHTS -->
-    <section class="metrics wrap">
-      <div>
-        <strong>01</strong>
-        <span>Easy-to-explore interface</span>
-      </div>
-      <div>
-        <strong>02</strong>
-        <span>Gaming-minded settings</span>
-      </div>
-      <div>
-        <strong>03</strong>
-        <span>Guidance included</span>
-      </div>
-    </section>
-
-    <!-- FEATURES -->
-    <section class="section wrap" id="features">
-      <div class="section-heading reveal">
-        <span class="kicker">THE RYVX EXPERIENCE</span>
-        <h2>MADE FOR YOUR <em>WORKFLOW.</em></h2>
-        <p>
-          Useful tools and straightforward guidance, wrapped in a clean
-          desktop experience.
-        </p>
-      </div>
-
-      <div class="feature-grid">
-        <article class="feature reveal">
-          <div class="feature-icon">ϟ</div>
-          <h3>Gaming Focus</h3>
-          <p>Explore configuration options with PC gaming in mind.</p>
-          <span class="feature-index">01 / 04</span>
-        </article>
-
-        <article class="feature reveal">
-          <div class="feature-icon">▣</div>
-          <h3>System Overview</h3>
-          <p>View useful device information in one convenient place.</p>
-          <span class="feature-index">02 / 04</span>
-        </article>
-
-        <article class="feature reveal">
-          <div class="feature-icon">⊞</div>
-          <h3>Windows Options</h3>
-          <p>Review selected Windows preferences and learn what they do.</p>
-          <span class="feature-index">03 / 04</span>
-        </article>
-
-        <article class="feature reveal">
-          <div class="feature-icon">◈</div>
-          <h3>Clear Guidance</h3>
-          <p>Understand a setting before deciding whether to change it.</p>
-          <span class="feature-index">04 / 04</span>
-        </article>
-      </div>
-    </section>
-
-    <!-- PRODUCT -->
-    <section class="product-section" id="product">
-      <div class="wrap product-layout">
-
-        <div class="product-visual reveal">
-          <div class="product-ring ring-a"></div>
-          <div class="product-ring ring-b"></div>
-
-          <div class="product-card">
-            <div class="product-mark">R<span>.</span></div>
-            <div class="product-name">RYVX TWEAKS</div>
-            <div class="product-divider"></div>
-            <div class="product-glyph">⌘</div>
-            <small>PC CONFIGURATION</small>
-            <div class="product-version">DIGITAL PACK</div>
-          </div>
-
-          <span class="visual-label">RYVX / 001</span>
-        </div>
-
-        <div class="product-copy reveal">
-          <span class="kicker">DIGITAL DOWNLOAD</span>
-
-          <h2>
-            YOUR SETUP.<br>
-            <em>YOUR CONTROL.</em>
-          </h2>
-
+    <!-- IMPORTANT: Get Tweaks links directly to this section using #product -->
+    <section class="section" id="product">
+      <div class="container product-wrap">
+        <div class="product-copy">
+          <div class="section-kicker">The toolkit</div>
+          <h2>Take your setup into your own hands.</h2>
           <p>
-            Get the Ryvx Tweaks app with a setup guide and explanations
-            of its included features. Built to make PC configuration
-            easier to understand.
+            Ryvx Tweaks brings system information, Windows setting guidance,
+            and community links into one simple interface.
           </p>
-
-          <ul class="included">
-            <li><span>✓</span> Ryvx Tweaks application files</li>
-            <li><span>✓</span> Step-by-step setup guide</li>
-            <li><span>✓</span> Explanations of included settings</li>
-            <li><span>✓</span> Digital delivery after payment confirmation</li>
-            <li><span>✓</span> Ryvx community support</li>
+          <ul class="check-list">
+            <li>Organized tweaking interface</li>
+            <li>System information page</li>
+            <li>Settings guidance and descriptions</li>
+            <li>Ryvx community links</li>
           </ul>
+          <p>Results depend on your hardware, settings, and games. No specific FPS increase is guaranteed.</p>
+        </div>
 
-          <div class="price-line">
-            <strong>$8.99</strong>
-            <span>One-time purchase</span>
-          </div>
-
-          <!-- Replace #checkout with your secure hosted checkout URL. -->
-          <a class="button primary buy-button" href="#checkout">
-            Get Ryvx Tweaks <span>↗</span>
+        <div class="product-card">
+          <div class="product-label">Ryvx Tweaks</div>
+          <div class="product-name">Gaming Toolkit</div>
+          <div class="price">$8.99 <small>one-time price</small></div>
+          <p>Review the toolkit details and compatibility before getting started.</p>
+          <!-- Temporary working destination: opens Discord until a secure checkout is configured -->
+          <a class="btn btn-primary" href="https://discord.gg/qN5YCF2BEQ" target="_blank" rel="noopener noreferrer">
+            Get Tweaks on Discord <span>↗</span>
           </a>
-
-          <p class="fine-print" id="checkout">
-            Checkout is not connected yet. Set up a secure hosted payment
-            and digital-delivery service before accepting orders.
-          </p>
-
-          <p class="fine-print">
-            Performance varies by device and settings. No specific FPS
-            increase or performance result is guaranteed.
+          <p style="text-align:center;font-size:10px;margin-top:12px;">
+            Checkout and digital delivery are not automated yet.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
-    <section class="section wrap" id="how">
-      <div class="section-heading reveal">
-        <span class="kicker">GETTING STARTED</span>
-        <h2>THREE SIMPLE <em>STEPS.</em></h2>
-        <p>From choosing the pack to opening your download.</p>
-      </div>
-
-      <div class="steps-grid">
-        <article class="step reveal">
-          <span>01</span>
-          <div>
+    <section class="section section-alt" id="steps">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">Getting started</div>
+          <h2>Three simple steps.</h2>
+          <p>From choosing the pack to opening your download.</p>
+        </div>
+        <div class="steps-grid">
+          <article class="step-card">
+            <div class="step-number">01</div>
             <h3>Choose your pack</h3>
             <p>Read the product details and compatibility notes before purchasing.</p>
-          </div>
-        </article>
-
-        <article class="step reveal">
-          <span>02</span>
-          <div>
+          </article>
+          <article class="step-card">
+            <div class="step-number">02</div>
             <h3>Complete checkout</h3>
-            <p>Use the secure checkout page and provide an email for delivery.</p>
-          </div>
-        </article>
-
-        <article class="step reveal">
-          <span>03</span>
-          <div>
+            <p>When checkout is available, use the secure checkout page and provide an email for delivery.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-number">03</div>
             <h3>Follow the guide</h3>
-            <p>Once payment is confirmed, use the delivery email to get started.</p>
+            <p>Use the provided instructions to get started and review settings carefully.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">FAQ</div>
+          <h2>Questions? We've got you.</h2>
+          <p>Some quick information about Ryvx Tweaks.</p>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>What is Ryvx Tweaks?</summary>
+            <p>Ryvx Tweaks is a Windows toolkit that organizes system information and Windows setting guidance for gamers.</p>
+          </details>
+          <details>
+            <summary>Will it increase my FPS?</summary>
+            <p>Performance depends on your PC, game, drivers, and current settings. No particular FPS improvement is guaranteed.</p>
+          </details>
+          <details>
+            <summary>Is it compatible with every PC?</summary>
+            <p>Compatibility can vary by Windows version and hardware. Check the product's compatibility notes before using it.</p>
+          </details>
+          <details>
+            <summary>How do I get the toolkit?</summary>
+            <p>Use the Get Tweaks button to contact the Ryvx community for current availability. A secure checkout and automatic delivery need to be configured separately.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <div class="community-box">
+          <div>
+            <div class="section-kicker">Join the community</div>
+            <h2>Stay connected with Ryvx.</h2>
+            <p>Follow the channel and join the Discord community for updates.</p>
           </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section faq-section" id="faq">
-      <div class="wrap">
-        <div class="section-heading reveal">
-          <span class="kicker">GOOD TO KNOW</span>
-          <h2>FREQUENTLY <em>ASKED.</em></h2>
-          <p>Quick answers before you get started.</p>
-        </div>
-
-        <div class="faq-list reveal">
-          <details>
-            <summary>Does Ryvx Tweaks guarantee more FPS?</summary>
-            <p>
-              No. Results depend on your hardware, drivers, games, and
-              current configuration. The app offers settings and guidance,
-              not guaranteed performance gains.
-            </p>
-          </details>
-
-          <details>
-            <summary>How do I receive the files?</summary>
-            <p>
-              Once a secure checkout and delivery provider is connected,
-              it can send access instructions to the email address entered
-              at purchase.
-            </p>
-          </details>
-
-          <details>
-            <summary>What Windows versions are supported?</summary>
-            <p>
-              Check the compatibility notes included with the product.
-              The supported Windows versions should be clearly listed
-              before installation.
-            </p>
-          </details>
-
-          <details>
-            <summary>Should I apply every setting?</summary>
-            <p>
-              No. Review each setting and its explanation first. Keep
-              Windows security protections enabled and avoid changes
-              you do not understand.
-            </p>
-          </details>
-
-          <details>
-            <summary>Where can I get help?</summary>
-            <p>
-              Join the Ryvx Discord community for product-related
-              questions and community support.
-            </p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <!-- COMMUNITY -->
-    <section class="wrap community-section">
-      <div class="community reveal">
-        <div class="community-symbol">✦</div>
-        <span class="kicker">THE COMMUNITY</span>
-        <h2>STAY IN THE <em>RYVX LOOP.</em></h2>
-        <p>
-          Join the community, ask questions, and keep up with
-          Ryvx Tweaks updates.
-        </p>
-
-        <div class="social-buttons">
-          <a
-            class="button primary"
-            href="https://discord.gg/qN5YCF2BEQ"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Join Discord <span>↗</span>
-          </a>
-
-          <a
-            class="social-button youtube"
-            href="https://www.youtube.com/@Ryvxesports"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"/>
-            </svg>
-            YouTube <span>↗</span>
-          </a>
+          <div class="community-actions">
+            <a class="btn btn-primary" href="https://www.youtube.com/@Ryvxesports" target="_blank" rel="noopener noreferrer">▶ YouTube</a>
+            <a class="btn btn-secondary" href="https://discord.gg/qN5YCF2BEQ" target="_blank" rel="noopener noreferrer">Join Discord ↗</a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="wrap footer-top">
-      <div>
-        <a class="brand" href="#home">
-          <span class="brand-icon">R</span>
-          <span>RYVX <b>TWEAKS</b></span>
-        </a>
-        <p>
-          A gaming-focused Windows customization project.
-          Review settings carefully before making changes.
-        </p>
-      </div>
-
-      <nav>
-        <a href="#features">Features</a>
-        <a href="#product">Product</a>
-        <a href="#faq">FAQ</a>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="brand" href="#home">
+        <span class="brand-mark">R</span>
+        <span>RYVX <em style="color:#9b5cff;font-style:normal;">TWEAKS</em></span>
+      </a>
+      <span>© <span id="year"></span> Ryvx Tweaks. All rights reserved.</span>
+      <div class="footer-links">
         <a href="https://www.youtube.com/@Ryvxesports" target="_blank" rel="noopener noreferrer">YouTube</a>
         <a href="https://discord.gg/qN5YCF2BEQ" target="_blank" rel="noopener noreferrer">Discord</a>
-      </nav>
-    </div>
-
-    <div class="wrap footer-bottom">
-      <span>© <span id="year"></span> Ryvx Tweaks. All rights reserved.</span>
-      <span>Independent project · No guaranteed performance claims.</span>
+        <a href="#home">Back to top ↑</a>
+      </div>
     </div>
   </footer>
 
   <script>
-    // Automatically update the copyright year.
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // Mobile navigation
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
 
-    // Mobile navigation.
-    const menuBtn = document.getElementById("menuBtn");
-    const nav = document.getElementById("nav");
-
-    menuBtn.addEventListener("click", () => {
-      const open = nav.classList.toggle("open");
-
-      menuBtn.setAttribute("aria-expanded", String(open));
-      menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-      menuBtn.textContent = open ? "×" : "☰";
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.textContent = isOpen ? "✕" : "☰";
     });
 
-    nav.querySelectorAll("a").forEach(link => {
+    // Close mobile menu after selecting a section
+    navLinks.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", () => {
-        nav.classList.remove("open");
-        menuBtn.setAttribute("aria-expanded", "false");
-        menuBtn.setAttribute("aria-label", "Open menu");
-        menuBtn.textContent = "☰";
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
       });
     });
 
-    // Interactive app preview.
-    const views = {
-      home: [
-        "Welcome back.",
-        "Your setup, organized in one place.",
-        [
-          ["▣", "System overview", "Device details"],
-          ["ϟ", "Gaming settings", "Configuration options"],
-          ["⊞", "Windows tools", "Helpful preferences"],
-          ["⚙", "App settings", "Manage your app"]
-        ]
-      ],
-      system: [
-        "System information",
-        "A quick overview of your device.",
-        [
-          ["▣", "Processor", "View CPU details"],
-          ["▤", "Memory", "View RAM information"],
-          ["▧", "Graphics", "View GPU details"],
-          ["◈", "Windows", "View OS details"]
-        ]
-      ],
-      gaming: [
-        "Gaming settings",
-        "Review gaming-related options.",
-        [
-          ["ϟ", "Game Mode", "Review preferences"],
-          ["⌖", "Capture", "Review capture settings"],
-          ["♧", "Game options", "Explore settings"],
-          ["◈", "Guides", "Read instructions"]
-        ]
-      ],
-      windows: [
-        "Windows tools",
-        "Explore selected Windows preferences.",
-        [
-          ["⊞", "Windows", "Review system options"],
-          ["⚙", "System", "Explore configuration"],
-          ["▣", "Startup", "Read startup guidance"],
-          ["◈", "Instructions", "Understand changes"]
-        ]
-      ],
-      settings: [
-        "App settings",
-        "Manage the Ryvx experience.",
-        [
-          ["⚙", "Preferences", "App configuration"],
-          ["◈", "Restore", "Review restore guidance"],
-          ["▤", "About", "App information"],
-          ["?", "Help", "Support information"]
-        ]
-      ]
-    };
-
-    const tabs = document.querySelectorAll(".demo-tab");
-    const title = document.getElementById("demoTitle");
-    const desc = document.getElementById("demoDesc");
-    const cards = document.getElementById("demoCards");
-
-    tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        const view = views[tab.dataset.tab];
-
-        tabs.forEach(item => item.classList.remove("active"));
-        tab.classList.add("active");
-
-        title.textContent = view[0];
-        desc.textContent = view[1];
-
-        cards.replaceChildren();
-
-        view[2].forEach(([symbol, name, note]) => {
-          const card = document.createElement("article");
-          card.className = "mini-card";
-
-          const icon = document.createElement("span");
-          icon.textContent = symbol;
-
-          const heading = document.createElement("b");
-          heading.textContent = name;
-
-          const small = document.createElement("small");
-          small.textContent = note;
-
-          card.append(icon, heading, small);
-          cards.append(card);
-        });
-      });
-    });
-
-    // Reveal sections as they scroll into view.
-    const revealItems = document.querySelectorAll(".reveal");
-
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-
-      revealItems.forEach(item => observer.observe(item));
-    } else {
-      revealItems.forEach(item => item.classList.add("visible"));
-    }
-    <a
-  href="https://www.youtube.com/@Ryvxesports"
-  target="_blank"
-  rel="noopener noreferrer"
-  class="youtube-btn"
->
-  ▶ Watch on YouTube
-</a>
+    // Current year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
